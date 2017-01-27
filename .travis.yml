@@ -39,7 +39,6 @@ before_install:
  - send -- "y\r"
  - interact
 
-
 script:
  - ./gradlew clean build -PdisablePreDex --continue --stacktrace
 env:
