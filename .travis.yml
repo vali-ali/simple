@@ -18,5 +18,6 @@ android:
       - 'google-gdk-license-.+'
 
 before_script:
+  - chmod +x expect "Do you accept the license *:" / send -- "y\r"
 
 script: ./gradlew test
