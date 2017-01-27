@@ -1,20 +1,49 @@
 language: android
-jdk: oraclejdk8
-sudo: false
-
+jdk:
+  - oraclejdk8
 android:
   components:
     - platform-tools
     - tools
     - build-tools-25.0.2
-    - android-15
     - android-25
-    - sys-img-armeabi-v7a-android-25
     - extra-android-m2repository
+    - android-L
+    - sys-img-armeabi-v7a-android-tv-l
+    - add-on
+    - extra
+  licenses:
+      - 'android-sdk-preview-license-+'
+      - 'android-sdk-license-.+'
+      - 'google-gdk-license-.+'
+      - 'android-25'
+      - 'android-.+'
 
-before_script:
-  # Create and start emulator
-  - echo no | android create avd --force -n test -t android-25 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+before_install:
+ - chmod +x gradlew
+ - spawn android update sdk --filter tools,platform-tools,build-tools-25.0.2,extra-android-support,android-25,sysimg-25,addon-google_apis-google-17,android-25,sysimg-25,addon-google_apis-google-19,addon-google_apis-google-19,extra-google-play_billing,extra-google-m2repository,extra-google-analytics_sdk_v2,extra-google-gcm,extra-google-google_play_services,extra-google-play_apk_expansion,extra-android-m2repository --no-ui --force --all
+ - expect "Do you accept the license *:"
+ - expect "Do you accept the license *:"
+ - send -- "y\r"
+ - expect "Do you accept the license *:"
+ - send -- "y\r"
+ - expect "Do you accept the license *:"
+ - send -- "y\r"
+ - expect "Do you accept the license *:"
+ - send -- "y\r"
+ - expect "Do you accept the license *:"
+ - send -- "y\r"
+ - expect "Do you accept the license *:"
+ - send -- "y\r"
+ - expect "Do you accept the license *:"
+ - send -- "y\r"
+ - interact
+
+
+script:
+ - ./gradlew clean build -PdisablePreDex --continue --stacktrace
+env:
+ - GRADLE_OPTS="-Xmx512m -XX:MaxPermSize=512m"
+branches:
+  only:
+    - master
