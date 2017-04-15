@@ -3,10 +3,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 ext.retrofitVersion = '2.1.0'
-ext.daggerVersion = '2.7'
+ext.daggerVersion = '2.10'
 
 buildscript {
-    ext.kotlin_version = '1.0.4'
+    ext.kotlin_version = '1.1.1'
     repositories {
         mavenCentral()
     }
@@ -45,7 +45,7 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
     lintOptions {
-        abortOnError false
+       ignore 'Unchecked'
     }
 }
 
